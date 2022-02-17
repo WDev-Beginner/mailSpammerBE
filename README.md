@@ -1,2 +1,2 @@
 # mailSpammer
-This is an email generating webApp built with Spring and React
+This is an Email generating webApp built with Spring and React
