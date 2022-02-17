@@ -1,9 +1,8 @@
-package com.egrine.mailSpammer.email;
+package com.egrine.mailSpammer.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmailRepository extends JpaRepository<EmailTemplate, Long> {
-
+public interface UserRepository extends JpaRepository<UserProfile, Long> {
 }

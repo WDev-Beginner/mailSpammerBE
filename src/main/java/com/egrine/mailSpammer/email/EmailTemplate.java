@@ -1,9 +1,15 @@
 package com.egrine.mailSpammer.email;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
+
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmailTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,6 +20,10 @@ public class EmailTemplate {
     @Column
     @Convert(converter = ListToStringConverter.class)
     private List<String> attachments;
+    @Column
+    @OneToMany
+    private List<EmailRecipient> recipients;
+
 
 
     public String getContent() {
