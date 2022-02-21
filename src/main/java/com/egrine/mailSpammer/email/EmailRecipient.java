@@ -17,6 +17,9 @@ public class EmailRecipient {
     @Column
     private String emailAddress;
 
+    @Column
+    private boolean isActive;
+
 
 
 

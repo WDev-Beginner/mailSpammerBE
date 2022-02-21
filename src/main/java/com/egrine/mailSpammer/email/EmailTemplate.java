@@ -15,8 +15,11 @@ public class EmailTemplate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    //TODO separate content into class, missing subject, cc, bcc
     @Column
     private String content;
+
     @Column
     @Convert(converter = ListToStringConverter.class)
     private List<String> attachments;
