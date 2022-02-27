@@ -16,18 +16,20 @@ public class EmailTemplate {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    //TODO separate content into class, missing subject, cc, bcc
+    // this will store the html version of the email Template
     @Column
     private String content;
 
+    // todo -> add a field to hold the json version
+
+    // attachments are no longer needed as the html version is ready to send
     @Column
     @Convert(converter = ListToStringConverter.class)
     private List<String> attachments;
+
     @Column
     @OneToMany
     private List<EmailRecipient> recipients;
-
-
 
     public String getContent() {
         return content;
