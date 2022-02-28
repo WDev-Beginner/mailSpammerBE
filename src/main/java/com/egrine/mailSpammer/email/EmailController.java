@@ -2,21 +2,22 @@ package com.egrine.mailSpammer.email;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController("/templates}")
+@RestController("/templates")
 @AllArgsConstructor
 public class EmailController {
-    private final EmailService service;
+    private final EmailServiceImp service;
 
     // user email template endpoints
     // todo -> add some user session handling to handle these data requests.
     // todo -> create exception classes to handle different api http responses
+
+    // todo => this returns all the json versions of the templates
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
@@ -24,6 +25,8 @@ public class EmailController {
         // return all the templates belonging to the logged-in user
         return new ArrayList<>();
     }
+
+    // todo => update both the html and the json versions
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
@@ -44,6 +47,8 @@ public class EmailController {
     void deleteUserTemplate(){
         // delete the email template here
     }
+
+    // todo => some endpoints to update only the specific recipients list
 
 
 

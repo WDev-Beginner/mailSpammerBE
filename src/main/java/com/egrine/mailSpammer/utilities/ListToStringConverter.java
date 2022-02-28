@@ -1,4 +1,4 @@
-package com.egrine.mailSpammer.email;
+package com.egrine.mailSpammer.utilities;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Converter
-class ListToStringConverter implements AttributeConverter<List<String>, String> {
+public class ListToStringConverter implements AttributeConverter<List<String>, String> {
     @Override
     public String convertToDatabaseColumn(List<String> attribute) {
         return attribute == null ? null : String.join(",", attribute);

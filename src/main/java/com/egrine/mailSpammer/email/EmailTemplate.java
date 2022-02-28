@@ -1,8 +1,9 @@
 package com.egrine.mailSpammer.email;
 
+import com.egrine.mailSpammer.utilities.JsonToStringConverter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
+import org.json.JSONObject;
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,38 +17,44 @@ public class EmailTemplate {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    // this will store the html version of the email Template
     @Column
-    private String content;
+    private String htmlEmail;
 
-    // todo -> add a field to hold the json version
-
-    // attachments are no longer needed as the html version is ready to send
     @Column
-    @Convert(converter = ListToStringConverter.class)
-    private List<String> attachments;
+    @Convert(converter = JsonToStringConverter.class)
+    private JSONObject jsonEmail;
 
     @Column
     @OneToMany
     private List<EmailRecipient> recipients;
 
-    public String getContent() {
-        return content;
+    public String getHtmlEmail() {
+        return htmlEmail;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setHtmlEmail(String htmlEmail) {
+        this.htmlEmail = htmlEmail;
     }
 
-    public List<String> getAttachments() {
-        return attachments;
+    public JSONObject getJsonEmail() {
+        return jsonEmail;
     }
 
-    public void setAttachments(List<String> attachments) {
-        this.attachments = attachments;
+    public void setJsonEmail(JSONObject jsonEmail) {
+        this.jsonEmail = jsonEmail;
     }
 
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
+
+    public List<EmailRecipient> getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipients(List<EmailRecipient> recipients) {
+        this.recipients = recipients;
+    }
+
+
 }
