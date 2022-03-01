@@ -2,6 +2,8 @@ package com.egrine.mailSpammer.email;
 
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController("/templates")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EmailController {
+
     private final EmailServiceImp service;
 
     // user email template endpoints
     // todo -> add some user session handling to handle these data requests.
     // todo -> create exception classes to handle different api http responses
-
     // todo => this returns all the json versions of the templates
 
     @ResponseStatus(HttpStatus.OK)
