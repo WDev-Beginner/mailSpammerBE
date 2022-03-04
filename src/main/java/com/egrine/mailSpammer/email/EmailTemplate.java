@@ -26,11 +26,11 @@ public class EmailTemplate {
     @Convert(converter = JsonToStringConverter.class)
     private JSONObject jsonEmail;
 
-    @JoinColumn
-    @OneToOne
-    private UserProfile templateOwner;
+    @ManyToOne
+    @JoinColumn()
+    private UserProfile emailTemplateOwner;
 
-    @OneToMany(mappedBy="emailTemplate")
+    @ManyToMany(mappedBy="emailTemplate")
     private List<EmailRecipient> emailRecipients;
 
 

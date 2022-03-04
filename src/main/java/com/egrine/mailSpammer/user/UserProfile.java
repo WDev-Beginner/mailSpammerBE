@@ -1,9 +1,12 @@
 package com.egrine.mailSpammer.user;
 
+import com.egrine.mailSpammer.email.EmailRecipient;
+import com.egrine.mailSpammer.email.EmailTemplate;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -21,6 +24,9 @@ public class UserProfile {
     private String emailAddress;
     @Column
     private String password;
+    @OneToMany(mappedBy="emailTemplateOwner")
+    private List<EmailTemplate> emailTemplates;
+
 
 
 

@@ -20,10 +20,8 @@ public class EmailRecipient {
     @Column
     private boolean isActive;
     
-    @ManyToOne
-    @JoinColumn()
-    private EmailTemplate emailTemplate;
-
+    @ManyToMany
+    private List<EmailTemplate> emailTemplate;
 
 
 
