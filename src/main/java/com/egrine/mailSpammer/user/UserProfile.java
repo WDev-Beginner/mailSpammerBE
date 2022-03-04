@@ -17,7 +17,7 @@ public class UserProfile {
     private String firstName;
     @Column
     private String lastName;
-    @Column
+    @Column(unique = true)
     private String emailAddress;
     @Column
     private String password;

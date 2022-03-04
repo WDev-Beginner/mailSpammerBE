@@ -1,32 +1,38 @@
 package com.egrine.mailSpammer.email;
 
+import com.egrine.mailSpammer.user.UserProfile;
 import com.egrine.mailSpammer.utilities.JsonToStringConverter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.json.JSONObject;
+
 import javax.persistence.*;
 import java.util.List;
 
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class EmailTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String htmlEmail;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     @Convert(converter = JsonToStringConverter.class)
     private JSONObject jsonEmail;
 
-    @Column
-    @OneToMany
-    private List<EmailRecipient> recipients;
+    @JoinColumn
+    @OneToOne
+    private UserProfile templateOwner;
+
+    @OneToMany(mappedBy="emailTemplate")
+    private List<EmailRecipient> emailRecipients;
+
 
     public String getHtmlEmail() {
         return htmlEmail;
@@ -49,11 +55,11 @@ public class EmailTemplate {
     public void setId(Long id) { this.id = id; }
 
     public List<EmailRecipient> getRecipients() {
-        return recipients;
+        return emailRecipients;
     }
 
     public void setRecipients(List<EmailRecipient> recipients) {
-        this.recipients = recipients;
+        this.emailRecipients = recipients;
     }
 
 
