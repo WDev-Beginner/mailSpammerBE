@@ -1,21 +1,15 @@
 package com.egrine.mailSpammer.email;
-
-
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController("/templates")
 @RequiredArgsConstructor
-public class EmailController {
+class EmailController {
 
-    private final EmailServiceImp service;
+    private final EmailService service;
 
     // user email template endpoints
     // todo -> add some user session handling to handle these data requests
