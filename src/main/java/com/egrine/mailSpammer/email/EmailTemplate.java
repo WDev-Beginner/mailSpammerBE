@@ -1,5 +1,6 @@
 package com.egrine.mailSpammer.email;
 
+import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
 import com.egrine.mailSpammer.user.UserProfile;
 import com.egrine.mailSpammer.utilities.JsonToStringConverter;
 import lombok.AllArgsConstructor;
@@ -30,9 +31,16 @@ public class EmailTemplate {
     @JoinColumn()
     private UserProfile emailTemplateOwner;
 
-    @ManyToMany(mappedBy="emailTemplate")
+    @ManyToMany(mappedBy = "emailTemplate")
     private List<EmailRecipient> emailRecipients;
 
+    // custom DTO constructor
+    public EmailTemplate(EmailTemplateDTO newEmailTemplate) {
+        this.setHtmlEmail(newEmailTemplate.getHtmlEmail());
+        this.setJsonEmail(newEmailTemplate.getJsonEmail());
+        this.setEmailTemplateOwner(newEmailTemplate.getTemplateOwner());
+        this.setEmailRecipients(newEmailTemplate.getEmailRecipients());
+    }
 
     public String getHtmlEmail() {
         return htmlEmail;
@@ -62,5 +70,13 @@ public class EmailTemplate {
         this.emailRecipients = recipients;
     }
 
+    public void setEmailTemplateOwner(UserProfile emailTemplateOwner) {
+        this.emailTemplateOwner = emailTemplateOwner;
+    }
+
+    public void setEmailRecipients(List<EmailRecipient> emailRecipients) {
+        this.emailRecipients = emailRecipients;
+
+    }
 
 }

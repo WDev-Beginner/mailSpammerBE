@@ -1,8 +1,19 @@
 package com.egrine.mailSpammer.email;
+import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 
 public interface EmailService {
 
+
+    List<EmailTemplate> getAllUserEmailTemplates(Long emailTemplateOwnerId);
+
+    EmailTemplate getEmailTemplate(Long emailTemplateId);
+
+    void addUserEmailTemplate(EmailTemplateDTO newUserEmailTemplate);
+
+    void updateUserEmailTemplate(Long emailTemplateId, EmailTemplateDTO updatedEmailTemplate);
+
+    void deleteUserEmailTemplate(Long emailTemplateId);
 }
