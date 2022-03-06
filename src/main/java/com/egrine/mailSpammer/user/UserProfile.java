@@ -2,6 +2,7 @@ package com.egrine.mailSpammer.user;
 
 import com.egrine.mailSpammer.email.EmailRecipient;
 import com.egrine.mailSpammer.email.EmailTemplate;
+import com.egrine.mailSpammer.user.DTO.UserProfileDTO;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +28,13 @@ public class UserProfile {
     @OneToMany(mappedBy="emailTemplateOwner")
     private List<EmailTemplate> emailTemplates;
 
-
+    // custom DTO constructor
+    public UserProfile(UserProfileDTO user){
+        this.setFirstName(user.getFirstName());
+        this.setLastName(user.getLastName());
+        this.setEmailAddress(user.getEmailAddress());
+        this.setPassword(user.getPassword()); // password is sent hashed from the front end
+    }
 
 
     public String getFirstName() {
