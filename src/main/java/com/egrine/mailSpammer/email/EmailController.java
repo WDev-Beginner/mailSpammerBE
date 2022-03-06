@@ -1,15 +1,20 @@
 package com.egrine.mailSpammer.email;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController("/templates")
-@RequiredArgsConstructor
+@RestController
+@RequestMapping("/templates")
 class EmailController {
 
     private final EmailService service;
+
+    @Autowired
+    public EmailController(EmailService service){
+        this.service = service;
+    }
 
     // user email template endpoints
     // todo -> add some user session handling to handle these data requests
@@ -17,7 +22,7 @@ class EmailController {
     // todo -> this returns all the json versions of the templates
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("")
+    @GetMapping()
     List<EmailTemplate> getAllUserTemplates(){
 
         return new ArrayList<>();
@@ -26,24 +31,22 @@ class EmailController {
     // todo -> update both the html and the json versions
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("")
+    @PostMapping()
     EmailTemplate addUserTemplate(@RequestBody EmailTemplate newEmailTemplate){
         // add the email to the user template list
         return new EmailTemplate();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("")
+    @PutMapping()
     EmailTemplate updateUserTemplate(@RequestBody EmailTemplate updatedEmailTemplate){
         // update the email template here
         return new EmailTemplate();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("")
+    @DeleteMapping()
     void deleteUserTemplate(){
         // delete the email template here
     }
-
-    // todo => some endpoints to update only the specific recipients list
 }
