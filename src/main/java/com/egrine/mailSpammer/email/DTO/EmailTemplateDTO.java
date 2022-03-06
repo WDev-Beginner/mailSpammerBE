@@ -14,5 +14,5 @@ public class EmailTemplateDTO {
     private final String htmlEmail;
     private final JSONObject jsonEmail;
     private final UserProfile templateOwner;
-    private List<EmailRecipient> emailRecipients;
+    private final List<EmailRecipient> emailRecipients;
 }

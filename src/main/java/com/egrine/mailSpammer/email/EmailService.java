@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface EmailService {
 
-
     List<EmailTemplate> getAllUserEmailTemplates(Long emailTemplateOwnerId);
 
     EmailTemplate getEmailTemplate(Long emailTemplateId);
