@@ -4,16 +4,17 @@ import com.egrine.mailSpammer.email.EmailRepository;
 import com.egrine.mailSpammer.email.EmailService;
 import com.egrine.mailSpammer.email.EmailTemplate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class InMemoryEmailService implements EmailService {
-
     private final EmailRepository repository;
+
 
     @Override
     public List<EmailTemplate> getAllUserEmailTemplates(Long emailTemplateOwnerId) {
