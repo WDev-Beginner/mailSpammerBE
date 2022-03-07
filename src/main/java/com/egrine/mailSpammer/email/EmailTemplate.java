@@ -31,7 +31,7 @@ public class EmailTemplate {
     @JoinColumn()
     private UserProfile emailTemplateOwner;
 
-    @ManyToMany(mappedBy = "emailTemplate")
+    @ManyToMany(mappedBy = "emailTemplates")
     private List<EmailRecipient> emailRecipients;
 
     // custom DTO constructor

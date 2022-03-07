@@ -21,7 +21,7 @@ public class EmailRecipient {
     private boolean isActive;
     
     @ManyToMany
-    private List<EmailTemplate> emailTemplate;
+    private List<EmailTemplate> emailTemplates;
 
 
 
