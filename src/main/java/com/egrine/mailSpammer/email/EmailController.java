@@ -1,4 +1,6 @@
 package com.egrine.mailSpammer.email;
+import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -6,15 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/templates")
+@RequestMapping("/api/v1/templates")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class EmailController {
 
     private final EmailService service;
 
-    @Autowired
-    public EmailController(EmailService service){
-        this.service = service;
-    }
 
     // user email template endpoints
     // todo -> add some user session handling to handle these data requests
@@ -28,25 +27,23 @@ class EmailController {
         return new ArrayList<>();
     }
 
-    // todo -> update both the html and the json versions
-
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping()
-    EmailTemplate addUserTemplate(@RequestBody EmailTemplate newEmailTemplate){
+    @PostMapping("add-template")
+    EmailTemplate addUserTemplate(@RequestBody EmailTemplateDTO newEmailTemplate){
         // add the email to the user template list
         return new EmailTemplate();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping()
-    EmailTemplate updateUserTemplate(@RequestBody EmailTemplate updatedEmailTemplate){
+    @PutMapping("update-template")
+    EmailTemplate updateUserTemplate(@RequestBody EmailTemplateDTO updatedEmailTemplate){
         // update the email template here
         return new EmailTemplate();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping()
-    void deleteUserTemplate(){
+    @DeleteMapping(":id/delete-template")
+    void deleteUserTemplate(@RequestParam Long id){
         // delete the email template here
     }
 }
