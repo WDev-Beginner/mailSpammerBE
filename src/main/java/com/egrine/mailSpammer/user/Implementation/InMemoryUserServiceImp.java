@@ -13,8 +13,41 @@ class InMemoryUserServiceImp implements UserService {
     private final UserRepository repository;
 
     @Override
-    public void addUser(UserProfileDTO newUser) {
+    public UserProfile addUser(UserProfileDTO newUser) {
         UserProfile newUserProfile = new UserProfile(newUser);
+        newUserProfile.setAccountStatus(true);// user account status is set here to true at creation
         repository.save(newUserProfile);
+        return newUserProfile;
     }
+
+    @Override
+    public void deleteUser(Long userId) {
+        /*
+        the function does not actually delete the user
+        from the database but only deactivates them
+        */
+        UserProfile userProfileToDelete = this.getUserProfileById(userId);
+        userProfileToDelete.setAccountStatus(false);
+        repository.save(userProfileToDelete);
+    }
+
+    @Override
+    public UserProfile getUserProfileById(Long userId) {
+        UserProfile fetchedUser = repository.getUserProfileById(userId);
+        if(fetchedUser == null){        // user does not exist
+            return null;
+        }
+        return fetchedUser.getAccountStatus() ? fetchedUser : null;     // cannot get a deleted user
+    }
+
+    @Override
+    public UserProfile getUserProfileByEmail(String emailAddress) {
+        UserProfile fetchedUser = repository.getUserProfileByEmailAddress(emailAddress);
+        if(fetchedUser == null){
+            return null;
+        }
+        return fetchedUser.getAccountStatus() ? fetchedUser : null;     // cannot get a deleted user
+    }
+
+
 }

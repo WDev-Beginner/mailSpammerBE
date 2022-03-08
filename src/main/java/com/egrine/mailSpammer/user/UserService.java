@@ -3,6 +3,12 @@ import com.egrine.mailSpammer.user.DTO.UserProfileDTO;
 
 public interface UserService {
 
-    void addUser(UserProfileDTO newUser);
+    UserProfile addUser(UserProfileDTO newUser);
+
+    void deleteUser(Long UserId);
+
+    UserProfile getUserProfileById(Long userId);
+
+    UserProfile getUserProfileByEmail(String emailAddress);
 
 }
