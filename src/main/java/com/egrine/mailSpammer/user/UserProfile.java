@@ -25,11 +25,13 @@ public class UserProfile {
     private String emailAddress;
     @Column
     private String password;
-    @OneToMany(mappedBy="emailTemplateOwner")
+    @OneToMany(mappedBy = "emailTemplateOwner")
     private List<EmailTemplate> emailTemplates;
+    @Column
+    private boolean accountStatus; // true for active / false for deleted
 
     // custom DTO constructor
-    public UserProfile(UserProfileDTO user){
+    public UserProfile(UserProfileDTO user) {
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
         this.setEmailAddress(user.getEmailAddress());
@@ -77,6 +79,13 @@ public class UserProfile {
         this.id = id;
     }
 
+    public boolean getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(boolean accountStatus) {
+        this.accountStatus = accountStatus;
+    }
 
 
 }
