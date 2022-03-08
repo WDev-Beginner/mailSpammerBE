@@ -42,8 +42,8 @@ class EmailController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping(":id/delete-template")
-    void deleteUserTemplate(@RequestParam Long id){
+    @DeleteMapping("/delete-template/{id}")
+    void deleteUserTemplate(@PathVariable("id") Long templateId){
         // delete the email template here
     }
 }
