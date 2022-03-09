@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 class UserController {
     private final UserService service;
 
-    @PostMapping("/register")
+    @PostMapping("/add-user")
     public Object registerNewUser(@RequestBody UserProfileDTO newUser){
         if(service.getUserProfileByEmail(newUser.getEmailAddress()) != null){
             return new ResponseEntity<>(

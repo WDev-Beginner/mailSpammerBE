@@ -35,8 +35,8 @@ class EmailController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("update-template")
-    EmailTemplate updateUserTemplate(@RequestBody EmailTemplateDTO updatedEmailTemplate){
+    @PutMapping("update-template/{id}")
+    EmailTemplate updateUserTemplate(@RequestBody EmailTemplateDTO updatedEmailTemplate, @PathVariable("id") String templateId){
         // update the email template here
         return new EmailTemplate();
     }
