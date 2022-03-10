@@ -24,17 +24,15 @@ public class UserProfile {
     private String emailAddress;
     @Column
     private String password;
-    @OneToMany(mappedBy = "emailTemplateOwner")
-    private List<EmailTemplate> emailTemplates;
     @Column
     private boolean isAccountActive; // true for active / false for deleted
 
     // custom DTO constructor
-    public UserProfile(UserProfileDTO user) {
+    public UserProfile(String password, UserProfileDTO user) {
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
         this.setEmailAddress(user.getEmailAddress());
-        this.setPassword(user.getPassword()); // password is sent hashed from the front end
+        this.setPassword(password);
     }
 
 
