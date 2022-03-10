@@ -1,6 +1,5 @@
 package com.egrine.mailSpammer.user;
 
-import com.egrine.mailSpammer.email.EmailRecipient;
 import com.egrine.mailSpammer.email.EmailTemplate;
 import com.egrine.mailSpammer.user.DTO.UserProfileDTO;
 import lombok.AllArgsConstructor;
@@ -28,7 +27,7 @@ public class UserProfile {
     @OneToMany(mappedBy = "emailTemplateOwner")
     private List<EmailTemplate> emailTemplates;
     @Column
-    private boolean accountStatus; // true for active / false for deleted
+    private boolean isAccountActive; // true for active / false for deleted
 
     // custom DTO constructor
     public UserProfile(UserProfileDTO user) {
@@ -79,12 +78,12 @@ public class UserProfile {
         this.id = id;
     }
 
-    public boolean getAccountStatus() {
-        return accountStatus;
+    public boolean getIsAccountActive() {
+        return isAccountActive;
     }
 
-    public void setAccountStatus(boolean accountStatus) {
-        this.accountStatus = accountStatus;
+    public void setIsAccountActive(boolean accountStatus) {
+        this.isAccountActive = accountStatus;
     }
 
 

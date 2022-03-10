@@ -28,21 +28,21 @@ class EmailController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("add-template")
+    @PostMapping()
     EmailTemplate addUserTemplate(@RequestBody EmailTemplateDTO newEmailTemplate){
         // add the email to the user template list
         return new EmailTemplate();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("update-template/{id}")
+    @PutMapping("/{id}")
     EmailTemplate updateUserTemplate(@RequestBody EmailTemplateDTO updatedEmailTemplate, @PathVariable("id") String templateId){
         // update the email template here
         return new EmailTemplate();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/delete-template/{id}")
+    @DeleteMapping("/{id}")
     void deleteUserTemplate(@PathVariable("id") Long templateId){
         // delete the email template here
     }

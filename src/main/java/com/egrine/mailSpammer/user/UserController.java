@@ -1,6 +1,7 @@
 package com.egrine.mailSpammer.user;
 
 import com.egrine.mailSpammer.user.DTO.UserProfileDTO;
+import com.egrine.mailSpammer.utilities.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
@@ -16,19 +17,14 @@ import org.springframework.web.bind.annotation.*;
 class UserController {
     private final UserService service;
 
-    @PostMapping("/add-user")
+    @PostMapping()
     public Object registerNewUser(@RequestBody UserProfileDTO newUser){
-        if(service.getUserProfileByEmail(newUser.getEmailAddress()) != null){
-            return new ResponseEntity<>(
-                    "User with provided email already exists",
-                    HttpStatus.CONFLICT);
-        }
-        return service.addUser(newUser);
+        return service.addUser(newUser);// todo => CREATE DTO with no password
     }
 
-    @DeleteMapping("/delete-user/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") Long userId){
-        service.deleteUser(userId);
+        service.deleteUser(userId); // todo => add password encryption in the backend
     }
 
 
