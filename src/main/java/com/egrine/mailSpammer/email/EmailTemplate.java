@@ -2,7 +2,7 @@ package com.egrine.mailSpammer.email;
 
 import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
 import com.egrine.mailSpammer.user.UserProfile;
-import com.egrine.mailSpammer.utilities.JsonToStringConverter;
+import com.egrine.mailSpammer.utilityPackages.dbConverters.JsonToStringConverter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.json.JSONObject;
@@ -28,7 +28,7 @@ public class EmailTemplate {
     private JSONObject jsonEmail;
 
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn
     private UserProfile emailTemplateOwner;
 
     @ManyToMany(mappedBy = "emailTemplates")

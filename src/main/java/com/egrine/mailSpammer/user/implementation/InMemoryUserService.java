@@ -1,19 +1,22 @@
-package com.egrine.mailSpammer.user.Implementation;
-
+package com.egrine.mailSpammer.user.implementation;
+import com.egrine.mailSpammer.user.DTO.SecureUserProfileDTO;
 import com.egrine.mailSpammer.user.DTO.UserProfileDTO;
 import com.egrine.mailSpammer.user.UserProfile;
 import com.egrine.mailSpammer.user.UserRepository;
 import com.egrine.mailSpammer.user.UserService;
-import com.egrine.mailSpammer.utilities.UserAlreadyExistException;
-import com.egrine.mailSpammer.utilities.UserNotFoundException;
+import com.egrine.mailSpammer.utilityPackages.customExceptions.UserAlreadyExistException;
+import com.egrine.mailSpammer.utilityPackages.customExceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class InMemoryUserServiceImp implements UserService {
+class InMemoryUserService implements UserService {
+
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     /*
    todo
@@ -22,19 +25,22 @@ class InMemoryUserServiceImp implements UserService {
   */
 
     @Override
-    public UserProfile addUser(UserProfileDTO newUser) {
+    public SecureUserProfileDTO addUser(UserProfileDTO newProfileDTO) {
         /*
         the function checks if the user with provided email exists,
         if yes the function throws a custom exception, else it adds the user
         to the database
         */
-        UserProfile loadedUserProfile = this.getUserProfileByEmail(newUser.getEmailAddress());
+        UserProfile loadedUserProfile = this.getUserProfileByEmail(newProfileDTO.getEmailAddress());
         if (loadedUserProfile != null) { throw new UserAlreadyExistException(); }
 
-        UserProfile newUserProfile = new UserProfile(newUser);
+        String encryptedPassword =  passwordEncoder.encode(newProfileDTO.getPassword());
+
+        UserProfile newUserProfile = new UserProfile(encryptedPassword, newProfileDTO);
         newUserProfile.setIsAccountActive(true);
         repository.save(newUserProfile);
-        return newUserProfile; // todo => modify it to return passwordless user profile
+
+        return new SecureUserProfileDTO(newUserProfile.getId(), newProfileDTO);
     }
 
     @Override
@@ -70,5 +76,4 @@ class InMemoryUserServiceImp implements UserService {
         UserProfile fetchedUser = repository.getUserProfileByEmailAddress(emailAddress);
         return (fetchedUser == null || !fetchedUser.getIsAccountActive()) ? null : fetchedUser;
     }
-
 }

@@ -1,4 +1,4 @@
-package com.egrine.mailSpammer.utilities;
+package com.egrine.mailSpammer.utilityPackages.dbConverters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

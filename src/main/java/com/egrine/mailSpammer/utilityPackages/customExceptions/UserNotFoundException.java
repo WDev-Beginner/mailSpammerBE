@@ -1,4 +1,4 @@
-package com.egrine.mailSpammer.utilities;
+package com.egrine.mailSpammer.utilityPackages.customExceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

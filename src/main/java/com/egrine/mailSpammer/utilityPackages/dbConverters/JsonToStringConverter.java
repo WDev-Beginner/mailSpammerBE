@@ -1,13 +1,10 @@
-package com.egrine.mailSpammer.utilities;
+package com.egrine.mailSpammer.utilityPackages.dbConverters;
 
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Converter
 public class JsonToStringConverter implements AttributeConverter<JSONObject, String> {

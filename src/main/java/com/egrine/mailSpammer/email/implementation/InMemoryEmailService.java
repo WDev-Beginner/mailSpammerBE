@@ -1,4 +1,4 @@
-package com.egrine.mailSpammer.email.Implementation;
+package com.egrine.mailSpammer.email.implementation;
 import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
 import com.egrine.mailSpammer.email.EmailRepository;
 import com.egrine.mailSpammer.email.EmailService;
