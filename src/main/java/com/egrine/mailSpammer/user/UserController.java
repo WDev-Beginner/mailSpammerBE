@@ -26,7 +26,4 @@ class UserController {
     public void deleteUser(@PathVariable("id") Long userId){
         service.deleteUser(userId); // todo => add password encryption in the backend
     }
-
-
-
 }

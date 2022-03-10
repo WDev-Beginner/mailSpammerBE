@@ -1,4 +1,5 @@
 package com.egrine.mailSpammer.user.Implementation;
+
 import com.egrine.mailSpammer.user.DTO.UserProfileDTO;
 import com.egrine.mailSpammer.user.UserProfile;
 import com.egrine.mailSpammer.user.UserRepository;
@@ -14,6 +15,12 @@ import org.springframework.stereotype.Service;
 class InMemoryUserServiceImp implements UserService {
     private final UserRepository repository;
 
+    /*
+   todo
+   * start writing some tests
+   todo
+  */
+
     @Override
     public UserProfile addUser(UserProfileDTO newUser) {
         /*
@@ -21,24 +28,23 @@ class InMemoryUserServiceImp implements UserService {
         if yes the function throws a custom exception, else it adds the user
         to the database
         */
-        UserProfile loadedUserProfile = repository.getUserProfileByEmailAddress(newUser.getEmailAddress());
-        if(loadedUserProfile!=null){throw new UserAlreadyExistException();}
+        UserProfile loadedUserProfile = this.getUserProfileByEmail(newUser.getEmailAddress());
+        if (loadedUserProfile != null) { throw new UserAlreadyExistException(); }
 
         UserProfile newUserProfile = new UserProfile(newUser);
         newUserProfile.setIsAccountActive(true);
         repository.save(newUserProfile);
-        return newUserProfile;
+        return newUserProfile; // todo => modify it to return passwordless user profile
     }
 
     @Override
     public void deleteUser(Long userId) {
         /*
         the function does not actually delete the user
-        from the database but only deactivates them(accountStatus -> false)
+        from the database but only deactivates them(accountStatus -> false, email -> ****************)
         */
         UserProfile userProfileToDelete = this.getUserProfileById(userId);
-
-        if (userProfileToDelete==null){throw new UserNotFoundException();}
+        if (userProfileToDelete == null) { throw new UserNotFoundException(); }
 
         userProfileToDelete.setIsAccountActive(false);
         userProfileToDelete.setEmailAddress("************************");

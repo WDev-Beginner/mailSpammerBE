@@ -15,11 +15,17 @@ import java.util.List;
 class InMemoryEmailService implements EmailService {
     private final EmailRepository repository;
 
+    /*
+    todo
+    * refactor to handle some exceptions
+    * start writing some tests
+    todo
+   */
 
     @Override
     public List<EmailTemplate> getAllUserEmailTemplates(Long emailTemplateOwnerId) {
         List<EmailTemplate> allUserEmailTemplates = repository.getAllByEmailTemplateOwnerId(emailTemplateOwnerId);
-        return allUserEmailTemplates==null ? Collections.emptyList(): allUserEmailTemplates;
+        return allUserEmailTemplates==null ? Collections.emptyList() : allUserEmailTemplates;
     }
 
     @Override
@@ -36,7 +42,6 @@ class InMemoryEmailService implements EmailService {
 
     @Override
     public void updateUserEmailTemplate(Long emailTemplateId, EmailTemplateDTO updatedEmailTemplate) {
-        // get the email template
         EmailTemplate userTemplateToUpdate = this.getEmailTemplate(emailTemplateId);
         userTemplateToUpdate.setHtmlEmail(updatedEmailTemplate.getHtmlEmail());
         userTemplateToUpdate.setJsonEmail(updatedEmailTemplate.getJsonEmail());
