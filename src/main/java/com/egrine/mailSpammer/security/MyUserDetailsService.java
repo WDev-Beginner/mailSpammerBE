@@ -18,6 +18,10 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MyUserDetailsService implements UserDetailsService {
+    /*
+    Platform authentication is through email
+    no special user authorities, all system users are normal users
+     */
 
     private final UserRepository repository;
 

@@ -16,8 +16,6 @@ class EmailController {
 
 
     // user email template endpoints
-    // todo -> add some user session handling to handle these data requests
-    // todo -> create exception classes to handle different api http responses
     // todo -> this returns all the json versions of the templates
 
     @ResponseStatus(HttpStatus.OK)
