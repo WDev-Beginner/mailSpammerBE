@@ -22,10 +22,10 @@ class InMemoryUserService implements UserService {
    todo
    * start writing some tests
    todo
-  */
+   */
 
     @Override
-    public SecureUserProfileDTO addUser(UserProfileDTO newProfileDTO) {
+    public SecureUserProfileDTO addUser(UserProfileDTO newProfileDTO) throws UserAlreadyExistException{
         /*
         the function checks if the user with provided email exists,
         if yes the function throws a custom exception, else it adds the user
@@ -44,7 +44,7 @@ class InMemoryUserService implements UserService {
     }
 
     @Override
-    public void deleteUser(Long userId) {
+    public void deleteUser(Long userId) throws UserNotFoundException{
         /*
         the function does not actually delete the user
         from the database but only deactivates them(accountStatus -> false, email -> ****************)

@@ -45,5 +45,6 @@ class EmailController {
     @DeleteMapping("/{id}")
     void deleteUserTemplate(@PathVariable("id") Long templateId){
         // delete the email template here
+        // noreply@mailspammer.com //
     }
 }
