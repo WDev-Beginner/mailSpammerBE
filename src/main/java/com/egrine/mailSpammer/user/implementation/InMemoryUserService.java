@@ -37,7 +37,7 @@ class InMemoryUserService implements UserService {
         String encryptedPassword =  passwordEncoder.encode(newProfileDTO.getPassword());
 
         UserProfile newUserProfile = new UserProfile(encryptedPassword, newProfileDTO);
-        newUserProfile.setIsAccountActive(true);
+        newUserProfile.setAccountActive(true);
         repository.save(newUserProfile);
 
         return new SecureUserProfileDTO(newUserProfile.getId(), newProfileDTO);
@@ -52,7 +52,7 @@ class InMemoryUserService implements UserService {
         UserProfile userProfileToDelete = this.getUserProfileById(userId);
         if (userProfileToDelete == null) { throw new UserNotFoundException(); }
 
-        userProfileToDelete.setIsAccountActive(false);
+        userProfileToDelete.setAccountActive(false);
         userProfileToDelete.setEmailAddress("************************");
         repository.save(userProfileToDelete);
     }
@@ -64,7 +64,7 @@ class InMemoryUserService implements UserService {
         provided user id belongs to a deleted user
         */
         UserProfile fetchedUser = repository.getUserProfileById(userId);
-        return (fetchedUser == null || !fetchedUser.getIsAccountActive()) ? null : fetchedUser;
+        return (fetchedUser == null || !fetchedUser.isAccountActive()) ? null : fetchedUser;
     }
 
     @Override
@@ -74,6 +74,6 @@ class InMemoryUserService implements UserService {
         provided user email belongs to a deleted user
         */
         UserProfile fetchedUser = repository.getUserProfileByEmailAddress(emailAddress);
-        return (fetchedUser == null || !fetchedUser.getIsAccountActive()) ? null : fetchedUser;
+        return (fetchedUser == null || !fetchedUser.isAccountActive()) ? null : fetchedUser;
     }
 }
