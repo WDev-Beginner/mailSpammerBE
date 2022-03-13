@@ -1,4 +1,5 @@
 package com.egrine.mailSpammer.user.DTO;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 
 

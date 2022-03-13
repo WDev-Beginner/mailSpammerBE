@@ -1,6 +1,7 @@
 package com.egrine.mailSpammer.email;
 
 import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
+import com.egrine.mailSpammer.email.DTO.UpdateEmailTemplateDTO;
 import com.egrine.mailSpammer.user.UserProfile;
 import com.egrine.mailSpammer.utilityPackages.dbConverters.JsonToStringConverter;
 import lombok.AllArgsConstructor;
@@ -43,5 +44,12 @@ public class EmailTemplate {
         this.setJsonEmail(newEmailTemplate.getJsonEmail());
         this.setEmailTemplateOwner(newEmailTemplate.getTemplateOwner());
         this.setEmailRecipients(newEmailTemplate.getEmailRecipients());
+    }
+
+    // custom update function
+    public void updateEmailTemplate(UpdateEmailTemplateDTO updatedEmailTemplate){
+        this.setHtmlEmail(updatedEmailTemplate.getHtmlEmail());
+        this.setJsonEmail(updatedEmailTemplate.getJsonEmail());
+        this.setEmailRecipients(updatedEmailTemplate.getEmailRecipients());
     }
 }

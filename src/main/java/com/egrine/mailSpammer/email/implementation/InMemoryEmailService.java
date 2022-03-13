@@ -1,11 +1,14 @@
 package com.egrine.mailSpammer.email.implementation;
 import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
+import com.egrine.mailSpammer.email.DTO.UpdateEmailTemplateDTO;
 import com.egrine.mailSpammer.email.EmailRepository;
 import com.egrine.mailSpammer.email.EmailService;
 import com.egrine.mailSpammer.email.EmailTemplate;
+import com.egrine.mailSpammer.utilityPackages.customExceptions.TemplateNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -25,13 +28,12 @@ class InMemoryEmailService implements EmailService {
     @Override
     public List<EmailTemplate> getAllUserEmailTemplates(Long emailTemplateOwnerId) {
         List<EmailTemplate> allUserEmailTemplates = repository.getAllByEmailTemplateOwnerId(emailTemplateOwnerId);
-        return allUserEmailTemplates==null ? Collections.emptyList() : allUserEmailTemplates;
+        return allUserEmailTemplates==null ? Collections.emptyList() : allUserEmailTemplates;// return an empty list
     }
 
     @Override
     public EmailTemplate getEmailTemplate(Long emailTemplateId) {
-        EmailTemplate userEmailTemplate = repository.getEmailTemplateById(emailTemplateId);
-        return userEmailTemplate==null ? new EmailTemplate(): userEmailTemplate;
+        return repository.getEmailTemplateById(emailTemplateId);
     }
 
     @Override
@@ -41,11 +43,10 @@ class InMemoryEmailService implements EmailService {
     }
 
     @Override
-    public void updateUserEmailTemplate(Long emailTemplateId, EmailTemplateDTO updatedEmailTemplate) {
+    public void updateUserEmailTemplate(Long emailTemplateId, UpdateEmailTemplateDTO updatedEmailTemplate) {
         EmailTemplate userTemplateToUpdate = this.getEmailTemplate(emailTemplateId);
-        userTemplateToUpdate.setHtmlEmail(updatedEmailTemplate.getHtmlEmail());
-        userTemplateToUpdate.setJsonEmail(updatedEmailTemplate.getJsonEmail());
-        userTemplateToUpdate.setEmailRecipients(updatedEmailTemplate.getEmailRecipients());
+        if(userTemplateToUpdate == null) {throw new TemplateNotFoundException();}
+        userTemplateToUpdate.updateEmailTemplate(updatedEmailTemplate);
         repository.save(userTemplateToUpdate);
     }
 
