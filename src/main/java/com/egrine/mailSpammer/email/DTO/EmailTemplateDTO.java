@@ -1,6 +1,6 @@
 package com.egrine.mailSpammer.email.DTO;
 
-import com.egrine.mailSpammer.email.EmailRecipient;
+import com.egrine.mailSpammer.emailRecipient.EmailRecipient;
 import com.egrine.mailSpammer.user.UserProfile;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

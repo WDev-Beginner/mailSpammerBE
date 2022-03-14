@@ -1,9 +1,11 @@
 package com.egrine.mailSpammer.email;
+
 import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,34 +16,33 @@ class EmailController {
 
     private final EmailService service;
 
-
     // user email template endpoints
     // todo -> this returns all the json versions of the templates
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    List<EmailTemplate> getAllUserTemplates(){
+    List<EmailTemplate> getAllUserTemplates() {
 
         return new ArrayList<>();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping()
-    EmailTemplate addUserTemplate(@RequestBody EmailTemplateDTO newEmailTemplate){
+    EmailTemplate addUserTemplate(@RequestBody EmailTemplateDTO newEmailTemplate) {
         // add the email to the user template list
         return new EmailTemplate();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    EmailTemplate updateUserTemplate(@RequestBody EmailTemplateDTO updatedEmailTemplate, @PathVariable("id") String templateId){
+    EmailTemplate updateUserTemplate(@RequestBody EmailTemplateDTO updatedEmailTemplate, @PathVariable("id") String templateId) {
         // update the email template here
         return new EmailTemplate();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
-    void deleteUserTemplate(@PathVariable("id") Long templateId){
+    void deleteUserTemplate(@PathVariable("id") Long templateId) {
         // delete the email template here
         // noreply@mailspammer.com //
     }

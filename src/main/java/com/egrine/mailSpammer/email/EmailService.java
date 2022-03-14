@@ -1,4 +1,5 @@
 package com.egrine.mailSpammer.email;
+
 import com.egrine.mailSpammer.email.DTO.EmailTemplateDTO;
 import com.egrine.mailSpammer.email.DTO.UpdateEmailTemplateDTO;
 

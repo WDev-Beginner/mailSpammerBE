@@ -13,13 +13,13 @@ class UserController {
     private final UserService service;
 
     @PostMapping()
-    public SecureUserProfileDTO registerNewUser(@RequestBody UserProfileDTO newUser){
+    public SecureUserProfileDTO registerNewUser(@RequestBody UserProfileDTO newUser) {
         return service.addUser(newUser);
 
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long userId){
+    public void deleteUser(@PathVariable("id") Long userId) {
         service.deleteUser(userId);
     }
 }

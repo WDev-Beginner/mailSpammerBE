@@ -1,4 +1,5 @@
 package com.egrine.mailSpammer.security;
+
 import com.egrine.mailSpammer.user.UserProfile;
 import com.egrine.mailSpammer.user.UserRepository;
 import com.egrine.mailSpammer.utilityPackages.customExceptions.UserNotFoundException;
@@ -29,7 +30,9 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userEmailAddress) throws UserNotFoundException {
 
         UserProfile authenticatedUser = repository.getUserProfileByEmailAddress(userEmailAddress);
-        if(authenticatedUser == null){throw new UserNotFoundException();}
+        if (authenticatedUser == null) {
+            throw new UserNotFoundException();
+        }
 
         return new User(authenticatedUser.getEmailAddress(), authenticatedUser.getPassword(), Collections.emptyList());
     }

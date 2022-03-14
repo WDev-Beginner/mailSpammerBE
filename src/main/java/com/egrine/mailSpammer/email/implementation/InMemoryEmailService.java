@@ -20,7 +20,6 @@ class InMemoryEmailService implements EmailService {
 
     /*
     todo
-    * refactor to handle some exceptions
     * start writing some tests
     todo
    */
@@ -43,7 +42,7 @@ class InMemoryEmailService implements EmailService {
     }
 
     @Override
-    public void updateUserEmailTemplate(Long emailTemplateId, UpdateEmailTemplateDTO updatedEmailTemplate) {
+    public void updateUserEmailTemplate(Long emailTemplateId, UpdateEmailTemplateDTO updatedEmailTemplate) throws TemplateNotFoundException{
         EmailTemplate userTemplateToUpdate = this.getEmailTemplate(emailTemplateId);
         if(userTemplateToUpdate == null) {throw new TemplateNotFoundException();}
         userTemplateToUpdate.updateEmailTemplate(updatedEmailTemplate);
