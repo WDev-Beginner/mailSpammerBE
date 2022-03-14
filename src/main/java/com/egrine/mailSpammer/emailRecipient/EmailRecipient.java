@@ -1,5 +1,6 @@
-package com.egrine.mailSpammer.email;
+package com.egrine.mailSpammer.emailRecipient;
 
+import com.egrine.mailSpammer.email.EmailTemplate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class EmailRecipient {
 
     @Column
     private boolean isActive;
-    
+
     @ManyToMany
     private List<EmailTemplate> emailTemplates;
 }

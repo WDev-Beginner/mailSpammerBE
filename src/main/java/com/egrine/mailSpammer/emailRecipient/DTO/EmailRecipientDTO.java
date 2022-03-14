@@ -1,7 +1,6 @@
-package com.egrine.mailSpammer.email.DTO;
+package com.egrine.mailSpammer.emailRecipient.DTO;
 
 import com.egrine.mailSpammer.email.EmailTemplate;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
