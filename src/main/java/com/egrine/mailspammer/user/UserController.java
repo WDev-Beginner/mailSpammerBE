@@ -4,6 +4,8 @@ import com.egrine.mailspammer.user.DTO.SecureUserProfileDTO;
 import com.egrine.mailspammer.user.DTO.UserProfileDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +21,8 @@ class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long userId) {
-        service.deleteUser(userId);
+
+    public void deleteUser(@PathVariable("id") Long userId, @AuthenticationPrincipal User authenticatedUser) {
+        service.deleteUser(userId, authenticatedUser);
     }
 }

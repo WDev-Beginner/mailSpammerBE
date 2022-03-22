@@ -5,12 +5,16 @@ import com.egrine.mailspammer.user.DTO.UserProfileDTO;
 import com.egrine.mailspammer.user.UserProfile;
 import com.egrine.mailspammer.user.UserRepository;
 import com.egrine.mailspammer.user.UserService;
+import com.egrine.mailspammer.utility.Exceptions.ForbiddenOperationException;
 import com.egrine.mailspammer.utility.Exceptions.UserAlreadyExistException;
 import com.egrine.mailspammer.utility.Exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -47,15 +51,20 @@ class InMemoryUserService implements UserService {
     }
 
     @Override
-    public void deleteUser(Long userId) throws UserNotFoundException {
+    public void deleteUser(Long userId, User authenticatedUser) throws UserNotFoundException {
         /*
         the function does not actually delete the user
         from the database but only deactivates them(accountStatus -> false, email -> ****************)
         */
+
+        this.checkAuthority(userId, authenticatedUser);
+
         UserProfile userProfileToDelete = this.getUserProfileById(userId);
         if (userProfileToDelete == null) {
             throw new UserNotFoundException();
         }
+
+
 
         userProfileToDelete.setAccountActive(false);
         userProfileToDelete.setEmailAddress("************************");
@@ -80,5 +89,13 @@ class InMemoryUserService implements UserService {
         */
         UserProfile fetchedUser = repository.getUserProfileByEmailAddress(emailAddress);
         return (fetchedUser == null || !fetchedUser.isAccountActive()) ? null : fetchedUser;
+    }
+
+    @Override
+    public void checkAuthority(Long Id, User user) {
+        UserProfile currentUser = this.getUserProfileByEmail(user.getUsername());
+        if (!Objects.equals(currentUser.getId(), Id)) {
+            throw new ForbiddenOperationException();
+        }
     }
 }

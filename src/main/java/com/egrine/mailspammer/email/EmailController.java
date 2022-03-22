@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/v1/templates")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -16,8 +17,7 @@ class EmailController {
 
     private final EmailService service;
 
-    // user email template endpoints
-    // todo -> this returns all the json versions of the templates
+
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
