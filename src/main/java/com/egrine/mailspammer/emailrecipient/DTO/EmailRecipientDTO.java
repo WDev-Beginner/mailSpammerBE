@@ -9,5 +9,5 @@ import lombok.RequiredArgsConstructor;
 public class EmailRecipientDTO {
     private final String emailAddress;
     private final boolean isActive;
-    private final EmailTemplate newAssignedEmailTemplate;
+    private final EmailTemplate newAssignedEmailTemplate; // DTO should get id instead of entity
 }

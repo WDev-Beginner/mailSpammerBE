@@ -40,17 +40,17 @@ public class EmailTemplate {
     private List<EmailRecipient> emailRecipients;
 
     // custom DTO constructor
-    public EmailTemplate(EmailTemplateDTO newEmailTemplate) {
+    public EmailTemplate(EmailTemplateDTO newEmailTemplate, UserProfile owner, List<EmailRecipient> recipients) {
         this.setHtmlEmail(newEmailTemplate.getHtmlEmail());
         this.setJsonEmail(newEmailTemplate.getJsonEmail());
-        this.setEmailTemplateOwner(newEmailTemplate.getTemplateOwner());
-        this.setEmailRecipients(newEmailTemplate.getEmailRecipients());
+        this.setEmailTemplateOwner(owner);
+        this.setEmailRecipients(recipients);
     }
 
     // custom update function
-    public void updateEmailTemplate(UpdateEmailTemplateDTO updatedEmailTemplate) {
+    public void updateEmailTemplate(UpdateEmailTemplateDTO updatedEmailTemplate, List<EmailRecipient> recipients) {
         this.setHtmlEmail(updatedEmailTemplate.getHtmlEmail());
         this.setJsonEmail(updatedEmailTemplate.getJsonEmail());
-        this.setEmailRecipients(updatedEmailTemplate.getEmailRecipients());
+        this.setEmailRecipients(recipients);
     }
 }

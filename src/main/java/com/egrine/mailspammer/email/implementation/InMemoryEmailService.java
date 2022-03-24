@@ -4,6 +4,7 @@ import com.egrine.mailspammer.email.DTO.UpdateEmailTemplateDTO;
 import com.egrine.mailspammer.email.EmailRepository;
 import com.egrine.mailspammer.email.EmailService;
 import com.egrine.mailspammer.email.EmailTemplate;
+import com.egrine.mailspammer.emailrecipient.EmailRecipientRepository;
 import com.egrine.mailspammer.user.UserProfile;
 import com.egrine.mailspammer.user.UserService;
 import com.egrine.mailspammer.utility.Exceptions.TemplateNotFoundException;
@@ -19,8 +20,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class InMemoryEmailService implements EmailService {
+
     private final EmailRepository emailRepository;
     private final UserService userService;
+    private final EmailRecipientRepository recipientRepository;
 
     /*
     todo
@@ -45,9 +48,14 @@ class InMemoryEmailService implements EmailService {
 
     @Override
     public EmailTemplate addUserEmailTemplate(EmailTemplateDTO newUserEmailTemplate, User user) {
-        userService.checkAuthority(newUserEmailTemplate.getTemplateOwner().getId(), user);// check if the user in the template has same id as the user authenticated
-        EmailTemplate userEmailTemplateToAdd = new EmailTemplate(newUserEmailTemplate);// new template constructed by DTO
+        userService.checkAuthority(newUserEmailTemplate.getTemplateOwnerId(), user);
+
+        EmailTemplate userEmailTemplateToAdd = new EmailTemplate(newUserEmailTemplate,
+                userService.getUserProfileById(newUserEmailTemplate.getTemplateOwnerId()),
+                recipientRepository.getEmailRecipientsById(newUserEmailTemplate.getEmailRecipients()));
+
         emailRepository.save(userEmailTemplateToAdd);
+
         return userEmailTemplateToAdd;
     }
 
@@ -55,7 +63,10 @@ class InMemoryEmailService implements EmailService {
     public EmailTemplate updateUserEmailTemplate(Long emailTemplateId, UpdateEmailTemplateDTO updatedEmailTemplate, User user) throws TemplateNotFoundException{
         EmailTemplate userTemplateToUpdate = this.getEmailTemplate(emailTemplateId, user);
         if(userTemplateToUpdate == null) {throw new TemplateNotFoundException();}
-        userTemplateToUpdate.updateEmailTemplate(updatedEmailTemplate);
+
+        userTemplateToUpdate.updateEmailTemplate(updatedEmailTemplate,
+                recipientRepository.getEmailRecipientsById(updatedEmailTemplate.getEmailRecipients()));
+
         emailRepository.save(userTemplateToUpdate);
         return userTemplateToUpdate;
     }
