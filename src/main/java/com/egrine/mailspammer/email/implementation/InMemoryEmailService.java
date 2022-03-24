@@ -29,32 +29,35 @@ class InMemoryEmailService implements EmailService {
    */
 
     @Override
-    public List<EmailTemplate> getAllUserEmailTemplates(Long emailTemplateOwnerId, User user) {
-        userService.checkAuthority(emailTemplateOwnerId, user);
-        List<EmailTemplate> allUserEmailTemplates = emailRepository.getAllByEmailTemplateOwnerId(emailTemplateOwnerId);
+    public List<EmailTemplate> getAllUserEmailTemplates(User user) {
+        // get user profile from db
+        UserProfile currenUser = userService.getUserProfileByEmail(user.getUsername());
+
+        List<EmailTemplate> allUserEmailTemplates = emailRepository.getAllByEmailTemplateOwnerId(currenUser.getId());
         return allUserEmailTemplates==null ? Collections.emptyList() : allUserEmailTemplates;// return an empty list
     }
 
     @Override
     public EmailTemplate getEmailTemplate(Long emailTemplateId, User user) {
-        // need a function to return the user id based on the template id
         userService.checkAuthority(this.getTemplateOwnerByTemplateId(emailTemplateId), user);
         return emailRepository.getEmailTemplateById(emailTemplateId);
     }
 
     @Override
-    public void addUserEmailTemplate(EmailTemplateDTO newUserEmailTemplate, User user) {
-        userService.checkAuthority(newUserEmailTemplate.getTemplateOwner().getId(), user);
+    public EmailTemplate addUserEmailTemplate(EmailTemplateDTO newUserEmailTemplate, User user) {
+        userService.checkAuthority(newUserEmailTemplate.getTemplateOwner().getId(), user);// check if the user in the template has same id as the user authenticated
         EmailTemplate userEmailTemplateToAdd = new EmailTemplate(newUserEmailTemplate);// new template constructed by DTO
         emailRepository.save(userEmailTemplateToAdd);
+        return userEmailTemplateToAdd;
     }
 
     @Override
-    public void updateUserEmailTemplate(Long emailTemplateId, UpdateEmailTemplateDTO updatedEmailTemplate, User user) throws TemplateNotFoundException{
+    public EmailTemplate updateUserEmailTemplate(Long emailTemplateId, UpdateEmailTemplateDTO updatedEmailTemplate, User user) throws TemplateNotFoundException{
         EmailTemplate userTemplateToUpdate = this.getEmailTemplate(emailTemplateId, user);
         if(userTemplateToUpdate == null) {throw new TemplateNotFoundException();}
         userTemplateToUpdate.updateEmailTemplate(updatedEmailTemplate);
         emailRepository.save(userTemplateToUpdate);
+        return userTemplateToUpdate;
     }
 
     @Override

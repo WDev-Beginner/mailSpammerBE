@@ -1,9 +1,12 @@
 package com.egrine.mailspammer.email;
 
 import com.egrine.mailspammer.email.DTO.EmailTemplateDTO;
+import com.egrine.mailspammer.email.DTO.UpdateEmailTemplateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,29 +24,26 @@ class EmailController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    List<EmailTemplate> getAllUserTemplates() {
-
-        return new ArrayList<>();
+    List<EmailTemplate> getAllUserTemplates(@AuthenticationPrincipal User authenticatedUser) {
+        return service.getAllUserEmailTemplates(authenticatedUser);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping()
-    EmailTemplate addUserTemplate(@RequestBody EmailTemplateDTO newEmailTemplate) {
-        // add the email to the user template list
-        return new EmailTemplate();
+    EmailTemplate addUserTemplate(@RequestBody EmailTemplateDTO newEmailTemplate, @AuthenticationPrincipal User authenticatedUser) {
+        return service.addUserEmailTemplate(newEmailTemplate, authenticatedUser);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    EmailTemplate updateUserTemplate(@RequestBody EmailTemplateDTO updatedEmailTemplate, @PathVariable("id") String templateId) {
-        // update the email template here
-        return new EmailTemplate();
+    EmailTemplate updateUserTemplate(@RequestBody UpdateEmailTemplateDTO updatedEmailTemplate, @PathVariable("id") Long templateId,
+                                     @AuthenticationPrincipal User authenticatedUser) {
+        return service.updateUserEmailTemplate(templateId, updatedEmailTemplate, authenticatedUser);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
-    void deleteUserTemplate(@PathVariable("id") Long templateId) {
-        // delete the email template here
-        // noreply@mailspammer.com //
+    void deleteUserTemplate(@PathVariable("id") Long templateId, @AuthenticationPrincipal User authenticatedUser) {
+        service.deleteUserEmailTemplate(templateId, authenticatedUser);
     }
 }
