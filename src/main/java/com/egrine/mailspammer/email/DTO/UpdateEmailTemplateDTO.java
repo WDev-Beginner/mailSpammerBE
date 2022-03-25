@@ -12,5 +12,5 @@ import java.util.List;
 public class UpdateEmailTemplateDTO {
     private final String htmlEmail;
     private final JSONObject jsonEmail;
-    private final List<EmailRecipient> emailRecipients;
+    private final List<Long> emailRecipients;
 }

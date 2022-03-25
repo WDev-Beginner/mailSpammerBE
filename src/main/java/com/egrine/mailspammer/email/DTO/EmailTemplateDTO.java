@@ -13,6 +13,6 @@ import java.util.List;
 public class EmailTemplateDTO {
     private final String htmlEmail;
     private final JSONObject jsonEmail;
-    private final UserProfile templateOwner;
-    private final List<EmailRecipient> emailRecipients;
+    private final Long templateOwnerId;
+    private final List<Long> emailRecipients;
 }

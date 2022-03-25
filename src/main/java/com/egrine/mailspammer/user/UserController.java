@@ -21,7 +21,6 @@ class UserController {
     }
 
     @DeleteMapping("/{id}")
-
     public void deleteUser(@PathVariable("id") Long userId, @AuthenticationPrincipal User authenticatedUser) {
         service.deleteUser(userId, authenticatedUser);
     }

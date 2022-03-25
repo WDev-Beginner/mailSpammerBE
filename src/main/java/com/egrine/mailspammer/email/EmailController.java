@@ -20,8 +20,6 @@ class EmailController {
 
     private final EmailService service;
 
-
-
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
     List<EmailTemplate> getAllUserTemplates(@AuthenticationPrincipal User authenticatedUser) {
