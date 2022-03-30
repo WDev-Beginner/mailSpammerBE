@@ -1,5 +1,6 @@
 package com.egrine.mailspammer.user;
 
+import com.egrine.mailspammer.emailrecipient.EmailRecipient;
 import com.egrine.mailspammer.user.DTO.UserProfileDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +30,9 @@ public class UserProfile {
     private String password;
     @Column
     private boolean isAccountActive; // true for active / false for deleted
+
+    @ManyToMany(mappedBy = "owners")
+    private List<EmailRecipient> emailRecipients;
 
     // custom secure/normal DTO constructor
     public UserProfile(String password, UserProfileDTO user) {
