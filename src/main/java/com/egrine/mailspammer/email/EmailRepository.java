@@ -1,5 +1,6 @@
 package com.egrine.mailspammer.email;
 
+import com.egrine.mailspammer.emailrecipient.EmailRecipient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
