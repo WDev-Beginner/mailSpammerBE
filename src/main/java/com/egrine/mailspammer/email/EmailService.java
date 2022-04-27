@@ -19,6 +19,7 @@ public interface EmailService {
 
     void deleteUserEmailTemplate(Long emailTemplateId, User user);
 
-    Long getTemplateOwnerByTemplateId(Long emailTemplateId);
+    Long getTemplateOwnerIdByTemplateId(Long emailTemplateId);
 
 }
+

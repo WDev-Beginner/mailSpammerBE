@@ -214,8 +214,7 @@ VALUES (
                    "htmlClassNames": "u_body"
                }
            }
-       },
-       "schemaVersion": 7
+       },       "schemaVersion": 7
    }'
            ,
            1

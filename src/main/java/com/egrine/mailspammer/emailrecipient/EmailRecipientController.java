@@ -1,10 +1,8 @@
 package com.egrine.mailspammer.emailrecipient;
 
-import com.egrine.mailspammer.email.DTO.UpdateEmailTemplateDTO;
-import com.egrine.mailspammer.email.EmailService;
-import com.egrine.mailspammer.email.EmailTemplate;
 import com.egrine.mailspammer.emailrecipient.DTO.EmailRecipientDTO;
 import com.egrine.mailspammer.emailrecipient.DTO.UpdateEmailRecipientDTO;
+import com.egrine.mailspammer.utility.Exceptions.ForbiddenOperationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +10,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/{userId}/recipients")
@@ -29,21 +27,24 @@ class EmailRecipientController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping()
-    List<EmailRecipient> getEmailRecipientsById(@PathVariable Long userId, @AuthenticationPrincipal User authenticatedUser, List<Long> recipientIds){
-        return service.getEmailRecipientsById(recipientIds);
+    @PostMapping("/add-one")
+    EmailRecipient addUserEmailRecipient(@RequestBody EmailRecipientDTO newUserEmailRecipient, @PathVariable Long userId,  @AuthenticationPrincipal User authenticatedUser){
+        if(!Objects.equals(newUserEmailRecipient.getOwnerId(), userId)){ // check if the path userId is the same as the recipient(owner)
+            throw new ForbiddenOperationException();
+        }
+        return service.addUserEmailRecipient(newUserEmailRecipient, authenticatedUser, userId);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping()
-    EmailRecipient addUserEmailRecipient(@RequestBody EmailRecipientDTO newUserEmailRecipient, @PathVariable Long userId, @AuthenticationPrincipal User authenticatedUser){
-        return service.addUserEmailRecipient(newUserEmailRecipient, authenticatedUser);
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping()
+    @PostMapping("/add-list")
     List<EmailRecipient> addUserEmailRecipientList(@RequestBody List<EmailRecipientDTO> newRecipientList, @PathVariable Long userId, @AuthenticationPrincipal User authenticatedUser){
-        return service.addRecipientsToUser(newRecipientList, authenticatedUser);
+        for (EmailRecipientDTO recipient : newRecipientList){
+            if(!Objects.equals(recipient.getOwnerId(), userId)){ // check if the path userId is the same as the recipient(owner)
+                throw new ForbiddenOperationException();
+            }
+        }
+
+        return service.addRecipientsToUser(newRecipientList, authenticatedUser, userId);
     }
 
     @ResponseStatus(HttpStatus.OK)

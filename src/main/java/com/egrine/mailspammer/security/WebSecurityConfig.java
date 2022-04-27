@@ -1,5 +1,7 @@
 package com.egrine.mailspammer.security;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +15,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final RestAuthEntryPoint restAuthEntryPoint;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -21,16 +26,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/users").permitAll()
-                .antMatchers("/api/v1/templates").authenticated()
-                .antMatchers("/api/v1/{userId}/recipients").authenticated()
-                .antMatchers("/api/v1/users/{id}").authenticated()
+                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginProcessingUrl("/api/v1/users/login")
-                .successHandler(ajaxAuthenticationSuccessHandler())
-                .failureHandler(ajaxAuthenticationFailureHandler())
-                .permitAll()
+//                .formLogin()
+//                .loginProcessingUrl("/api/v1/users/login")
+//                .successHandler(ajaxAuthenticationSuccessHandler())
+//                .failureHandler(ajaxAuthenticationFailureHandler())
+//                .permitAll()
+//                .and()
+                .httpBasic()
                 .and()
                 .logout()
                 // So it accepts GET /logout
@@ -38,14 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .headers().frameOptions().disable();
-    }
-
-    private AuthenticationFailureHandler ajaxAuthenticationFailureHandler() {
-        return new AjaxAuthenticationFailureHandler();
-    }
-
-    private AuthenticationSuccessHandler ajaxAuthenticationSuccessHandler() {
-        return new AjaxAuthenticationSuccessHandler();
     }
 
     @Bean

@@ -17,11 +17,7 @@ public interface EmailRepository extends JpaRepository<EmailTemplate, Long> {
 
     void deleteEmailTemplateById(Long emailTemplateId);
 
-    @Query(value="SELECT email_template.email_template_owner_id " +
-            "FROM email_template " +
-            "WHERE email_template.id = ?1;",
-            nativeQuery = true)
-    Long getEmailTemplateOwnerById(Long Id);
+
 
 
 }

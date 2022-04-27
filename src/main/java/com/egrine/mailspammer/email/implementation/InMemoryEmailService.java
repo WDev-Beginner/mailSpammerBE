@@ -42,7 +42,7 @@ class InMemoryEmailService implements EmailService {
 
     @Override
     public EmailTemplate getEmailTemplate(Long emailTemplateId, User user) {
-        userService.checkAuthority(this.getTemplateOwnerByTemplateId(emailTemplateId), user);
+        userService.checkAuthority(this.getTemplateOwnerIdByTemplateId(emailTemplateId), user);
         return emailRepository.getEmailTemplateById(emailTemplateId);
     }
 
@@ -52,7 +52,7 @@ class InMemoryEmailService implements EmailService {
 
         EmailTemplate userEmailTemplateToAdd = new EmailTemplate(newUserEmailTemplate,
                 userService.getUserProfileById(newUserEmailTemplate.getTemplateOwnerId()),
-                recipientRepository.getEmailRecipientsById(newUserEmailTemplate.getEmailRecipients()));
+                recipientRepository.getEmailRecipientsByIdIn(newUserEmailTemplate.getEmailRecipients()));
 
         emailRepository.save(userEmailTemplateToAdd);
 
@@ -65,7 +65,7 @@ class InMemoryEmailService implements EmailService {
         if(userTemplateToUpdate == null) {throw new TemplateNotFoundException();}
 
         userTemplateToUpdate.updateEmailTemplate(updatedEmailTemplate,
-                recipientRepository.getEmailRecipientsById(updatedEmailTemplate.getEmailRecipients()));
+                recipientRepository.getEmailRecipientsByIdIn(updatedEmailTemplate.getEmailRecipients()));
 
         emailRepository.save(userTemplateToUpdate);
         return userTemplateToUpdate;
@@ -73,13 +73,15 @@ class InMemoryEmailService implements EmailService {
 
     @Override
     public void deleteUserEmailTemplate(Long emailTemplateId, User user) {
-        userService.checkAuthority(this.getTemplateOwnerByTemplateId(emailTemplateId), user);
+        userService.checkAuthority(this.getTemplateOwnerIdByTemplateId(emailTemplateId), user);
         emailRepository.deleteEmailTemplateById(emailTemplateId);
     }
 
     @Override
-    public Long getTemplateOwnerByTemplateId(Long emailTemplateId) {
-        return emailRepository.getEmailTemplateOwnerById(emailTemplateId);
+    public Long getTemplateOwnerIdByTemplateId(Long emailTemplateId) {
+        EmailTemplate template = emailRepository.getEmailTemplateById(emailTemplateId);
+
+        return template.getEmailTemplateOwner().getId();
     }
 
 
